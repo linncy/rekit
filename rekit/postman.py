@@ -56,5 +56,25 @@ def retrievemail(configdict,inbox='INBOX'):
 	imapserver.logout()
 	return msglist
 
+def getattach(msg,path,filename_withoutextension):
+	for part in msg.walk():
+		if part.get_content_maintype() == 'multipart':
+			continue
+		if part.get('Content-Disposition') is None:
+			continue
+		attachmentname = part.get_filename()
+		attchmentnamelist=splitFilename(attachmentname)
+		data = part.get_payload(decode=True)
+		if not data:
+			continue
+		marker=2
+		fname=path+filename_withoutextension+'.'+attchmentnamelist[-1]
+		while(os.path.isfile(fname)):
+			fname=path+filename_withoutextension+'_'+str(marker)+'.'+attchmentnamelist[-1]
+			marker+=1
+		f  = open(fname, 'w')
+		f.write(str(data))
+		f.close()
+
 def mailchecker(msg,criteriondict): #Maybe define it elsewhere
 	subjectlist=convert.extract_data_from_curly_brackets(msg['subject'])
