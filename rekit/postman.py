@@ -75,6 +75,3 @@ def getattach(msg,path,filename_withoutextension):
 		f  = open(fname, 'w')
 		f.write(str(data))
 		f.close()
-
-def mailchecker(msg,criteriondict): #Maybe define it elsewhere
-	subjectlist=convert.extract_data_from_curly_brackets(msg['subject'])
