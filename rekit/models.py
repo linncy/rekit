@@ -12,9 +12,10 @@ class info(Base):
 
 class stu(Base):
 	__tablename__='stu'
-	stu_uid=Column('info_id',Integer,primary_key=True,unique=True,nullable=False)
+	stu_uid=Column('stu_uid',Integer,primary_key=True,unique=True,nullable=False)
 	stuid=Column('stuid',String,nullable=False,unique=True)
 	stu_name=Column('stu_name',String)
+	stu_email=Column('stu_email',String)
 	stu_numofhw=Column('stu_numofhw',Integer)
 	stu_finalhwgrade=Column('stu_finalhwgrade',REAL)
 
@@ -35,23 +36,24 @@ class score(Base):
 	hw_id=Column('hw_id',String,ForeignKey('hw.hw_id'),nullable=False)
 	stu_uid=Column('stu_uid',Integer,ForeignKey("stu.stu_uid"),nullable=False)
 	stuid=Column('stuid',String,ForeignKey("stu.stuid"),nullable=False)
+	score_solution=Column('score_solution',String)
+	score_answer=Column('score_answer',String)
 	score=Column('score',REAL,nullable=False)
 
 class token(Base):
 	__tablename__='token'
 	token_id=Column('token_id',Integer,primary_key=True,unique=True,nullable=False)
-	hw_id=Column('hw_id',String,ForeignKey("hw.hw_id"),nullable=False)
+	hw_id=Column('hw_id',String,ForeignKey("hw.hw_id"))
 	stu_uid=Column('stu_uid',Integer,ForeignKey("stu.stu_uid"),nullable=False)
 	stuid=Column('stuid',String,ForeignKey("stu.stuid"),nullable=False)
+	token_type=Column('token_type',String,nullable=False)
 	token=Column('token',String,nullable=False)
-
-	def generate_token(self):
-		strToken=binascii.b2a_base64(os.urandom(6))[:-1]
-		return strToken
+	token_expiration=Column('token_expiration',String,nullable=False)
 
 class log(Base):
 	__tablename__='log'
 	log_id=Column('log_id',Integer,primary_key=True,unique=True,nullable=False)
 	time=Column('time',String,nullable=False)
-	stu_uid=Column('stu_uid',Integer,ForeignKey("stu.stu_uid"),nullable=False)
+	log_type=Column('log_type',String)
+	stu_uid=Column('stu_uid',Integer,ForeignKey("stu.stu_uid"))
 	log=Column('log',String)
