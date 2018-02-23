@@ -19,7 +19,7 @@ def create_db(basedir='./db',dbname='db.sqlite'):
 	metadata=MetaData(engine)
 	table_info=Table('info',metadata,
 		Column('info_id',Integer,primary_key=True,unique=True,nullable=False),
-		Column('info_name',String),
+		Column('info_name',String,unique=True),
 		Column('info_value',String),
 		sqlite_autoincrement=True)
 	table_stu=Table('stu',metadata,

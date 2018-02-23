@@ -7,7 +7,7 @@ Base = declarative_base()
 class info(Base):
 	__tablename__='info'
 	info_id=Column('info_id',Integer,primary_key=True,unique=True,nullable=False)
-	info_name=Column('info_name',String)
+	info_name=Column('info_name',String,unique=True)
 	info_value=Column('info_value',String)
 
 class stu(Base):
