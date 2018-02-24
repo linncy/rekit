@@ -85,7 +85,8 @@ def eclassdict2db(eclassdict,db_url):
 	for item in queryresult:
 		newquery=session.query(models.token).filter(models.token.stu_uid==item.stu_uid,models.token.stuid==item.stuid,models.token.token_type=='ACCESS')
 		if(newquery.count()==0):
-			newtoken=models.token(stu_uid=item.stu_uid,stuid=item.stuid,token_type='ACCESS',token=binascii.b2a_base64(os.urandom(6))[:-1],token_expiration='PERMANENT')
+			tokenstr=bytes.decode(binascii.b2a_base64(os.urandom(6))[:-1]).replace('+','a').replace('/','s').upper()
+			newtoken=models.token(stu_uid=item.stu_uid,stuid=item.stuid,token_type='ACCESS',token=tokenstr,token_expiration='PERMANENT')
 			session.add(newtoken)
 		else:
 			continue
