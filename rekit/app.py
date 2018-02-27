@@ -37,3 +37,5 @@ def generate_manual_all(db_url,manualORGname,dirname,exportformat='pdf',dependen
 	for item in queryresult:
 		generate_manual_single(item.stuid,db_url,manualORGname,dirname,exportformat,dependencylist)
 
+def requesthandler(configdict,INBOXname,PATHdict={}):
+	
