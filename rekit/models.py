@@ -55,5 +55,5 @@ class log(Base):
 	log_id=Column('log_id',Integer,primary_key=True,unique=True,nullable=False)
 	time=Column('time',String,nullable=False)
 	log_type=Column('log_type',String)
-	stu_uid=Column('stu_uid',Integer,ForeignKey("stu.stu_uid"))
+	stu_uid=Column('stuid',Integer,ForeignKey("stu.stuid"))
 	log=Column('log',String)

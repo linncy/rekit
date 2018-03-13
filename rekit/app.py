@@ -2,6 +2,8 @@ from . import models, rekit_db, postman
 from pyorgtex import convert, generate, orgexport
 from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
+import pytz, time
+from datetime import datetime
 
 def generate_manual_single(stuid,db_url,manualORGname,dirname='./',exportformat='pdf',dependencylist=[]):
 	newdict={'course':'','term':'','classnumber':'','stuid':'','stu_name':'','token':'','token_type':'ACCESS','token_expiration':'','message':''}
@@ -38,4 +40,11 @@ def generate_manual_all(db_url,manualORGname,dirname,exportformat='pdf',dependen
 		generate_manual_single(item.stuid,db_url,manualORGname,dirname,exportformat,dependencylist)
 
 def requesthandler(configdict,INBOXname,PATHdict={}):
-	
+	return 0
+
+def gettime():
+	time.time()
+	tz  = pytz.timezone('America/Edmonton')
+	newdatetime=datetime.fromtimestamp(time.time(), tz)
+	format = "%Y%m%d%H%M%S"
+	return(newdatetime.strftime(format))

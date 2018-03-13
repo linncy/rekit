@@ -61,7 +61,7 @@ def create_db(basedir='./db',dbname='db.sqlite'):
 		Column('log_id',Integer,primary_key=True,unique=True,nullable=False),
 		Column('time',String,nullable=False),
 		Column('log_type',String),
-		Column('stu_uid',Integer,ForeignKey("stu.stu_uid")),
+		Column('stuid',Integer,ForeignKey("stu.stuid")),
 		Column('log',String),
 		sqlite_autoincrement=True)
 	metadata.create_all()
@@ -92,3 +92,16 @@ def eclassdict2db(eclassdict,db_url):
 			continue
 	session.commit()
 	session.close()
+
+def write2db(model,db_url):
+	engine = create_engine(db_url)
+	Session=sessionmaker(bind=engine)
+	session=Session()
+	if(type(model)==list):
+		for item in model:
+			session.add(item)
+		session.commit()
+	else:
+		session.add(item)
+		session.commit()
+	
